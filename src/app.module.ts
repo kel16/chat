@@ -3,12 +3,12 @@ import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { ChatGateway } from './chat.gateway';
+import { ChatGateway } from "./chat.gateway";
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, "..", "build"),
+      rootPath: join(__dirname, "..", "..", "build"),
       exclude: ["/api*"],
     }),
   ],
