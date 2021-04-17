@@ -8,12 +8,7 @@ import {
   WebSocketServer,
 } from "@nestjs/websockets";
 import { Server, Socket } from "socket.io";
-
-type MessagePayload = {
-  uid: string;
-  text: string;
-  date: Date;
-};
+import { ChatMessagePayload } from "./types";
 
 @WebSocketGateway()
 export class AppGateway
@@ -21,10 +16,9 @@ export class AppGateway
   @WebSocketServer() server: Server;
   private logger: Logger = new Logger("AppGateway");
 
-  @SubscribeMessage("msgToServer")
-  handleMessage(client: Socket, payload: Object): void {
-    this.logger.log(`message received: ${payload}`);
-    this.server.emit("msgToClient", payload, client.id);
+  @SubscribeMessage("messageToServer")
+  handleMessage(client: Socket, message: ChatMessagePayload): void {
+    this.server.emit("messageToClient", message);
   }
 
   afterInit(server: Server) {

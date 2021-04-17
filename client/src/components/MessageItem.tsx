@@ -3,9 +3,13 @@ import { getTime } from "utils/date";
 import { MessageProps } from "~/types";
 import { Message } from "./styles";
 
-const MessageItem = ({ text, date }: MessageProps) => {
+type MessageItemProps = MessageProps & {
+  isAuthor: boolean;
+};
+
+const MessageItem = ({ text, date, isAuthor }: MessageItemProps) => {
   return (
-    <Message variant="primary">
+    <Message variant={isAuthor ? "primary" : "secondary"}>
       <p className="text">{text}</p>
       <p className="time">{getTime(date)}</p>
     </Message>
