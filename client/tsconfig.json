@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "moduleResolution": "node",
+    "target": "es5",
+    "allowJs": true,
+    "jsx": "react",
+    "paths": {
+      "common/*": ["components/common/*"],
+      "components/*": ["components/*"],
+      "store/*": ["store/*"],
+      "hooks/*": ["hooks/*"],
+      "api/*": ["api/*"],
+      "utils/*": ["utils/*"],
+      "~/*": ["*"]
+    }
+  },
+  "include": ["./**/*"]
+}
