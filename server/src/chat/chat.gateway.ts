@@ -8,7 +8,8 @@ import {
   WebSocketServer,
 } from "@nestjs/websockets";
 import { Server, Socket } from "socket.io";
-import { ChatMessagePayload, RoomPayload } from "../models";
+import { Room } from "../rooms/entities/room.entity";
+import { ChatMessage } from "./entities/chatMessage.entity";
 
 @WebSocketGateway()
 export class ChatGateway
@@ -17,24 +18,24 @@ export class ChatGateway
   private logger: Logger = new Logger("ChatGateway");
 
   @SubscribeMessage("messageToServer")
-  handleMessage(client: Socket, payload: ChatMessagePayload): void {
+  handleMessage(client: Socket, payload: ChatMessage): void {
     this.server.to(payload.room.uid).emit("messageToClient", payload);
   }
 
   @SubscribeMessage("createRoom")
-  handleRoomCreate(client: Socket, room: RoomPayload) {
+  handleRoomCreate(client: Socket, room: Room) {
     client.join(room.uid);
     client.emit("joinedRoom", room);
   }
 
   @SubscribeMessage("joinRoom")
-  handleRoomJoin(client: Socket, room: RoomPayload) {
+  handleRoomJoin(client: Socket, room: Room) {
     client.join(room.uid);
     client.emit("joinedRoom", room);
   }
 
   @SubscribeMessage("leaveRoom")
-  handleRoomLeave(client: Socket, room: RoomPayload) {
+  handleRoomLeave(client: Socket, room: Room) {
     client.leave(room.uid);
     client.emit("leftRoom", room);
   }

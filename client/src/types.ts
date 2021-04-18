@@ -1,22 +1,20 @@
 import { Room } from "api/models";
 
-export type Identifier = {
+type Identifier = {
   uid: string;
 };
 
-export type ClientPayload = Identifier & {
+export type Client = Identifier & {
   name: string;
 };
 
-export type MessageProps = {
+export type Message = Identifier & {
   text: string;
   date: Date;
 };
 
-export type MessagePayload = Identifier & MessageProps;
-
-export type ChatMessagePayload = {
-  client: ClientPayload;
+export type ChatMessage = {
+  client: Client;
   room: Room;
-  message: MessagePayload;
+  message: Message;
 };

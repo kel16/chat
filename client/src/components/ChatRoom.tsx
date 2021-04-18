@@ -9,7 +9,7 @@ import React, {
 import io from "socket.io-client";
 import * as uuid from "uuid";
 import { SERVER_URL } from "~/constants";
-import { ChatMessagePayload, ClientPayload } from "~/types";
+import { ChatMessage, Client } from "~/types";
 import MessageItem from "./MessageItem";
 import {
   Button,
@@ -22,19 +22,19 @@ import {
 
 type ChatRoomProps = {
   room: Room;
-  user: ClientPayload;
+  user: Client;
 };
 
 const ChatRoom = ({ room, user }: ChatRoomProps) => {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
   const socketRef = useRef(io(SERVER_URL));
 
   useEffect(() => {
     socketRef.current.emit("joinRoom", room);
 
-    socketRef.current.on("messageToClient", (message: ChatMessagePayload) => {
+    socketRef.current.on("messageToClient", (message: ChatMessage) => {
       setMessages((messages) => [...messages, message]);
     });
 
@@ -49,9 +49,9 @@ const ChatRoom = ({ room, user }: ChatRoomProps) => {
   const onSendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!message) return;
+    if (!message.trim()) return;
 
-    const messageData: ChatMessagePayload = {
+    const messageData: ChatMessage = {
       client: user,
       room,
       message: {

@@ -1,9 +1,9 @@
 import React from "react";
 import { getTime } from "utils/date";
-import { MessageProps } from "~/types";
+import { Message as MessageType } from "~/types";
 import { Message } from "./styles";
 
-type MessageItemProps = MessageProps & {
+type MessageItemProps = Omit<MessageType, "uid"> & {
   isAuthor: boolean;
 };
 

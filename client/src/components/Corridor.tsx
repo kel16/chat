@@ -12,12 +12,12 @@ const Corridor = ({ onJoinRoom }: CorridorProps) => {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [topic, setTopic] = useState("");
 
-  const fetchRooms = async () => {
-    const data = await getRooms();
-    setRooms(data);
-  };
-
   useEffect(() => {
+    const fetchRooms = async () => {
+      const data = await getRooms();
+      setRooms(data);
+    };
+
     fetchRooms();
   }, []);
 
@@ -44,8 +44,8 @@ const Corridor = ({ onJoinRoom }: CorridorProps) => {
         <p>We are happy to offer you some rooms with topics to debate over.</p>
         <p>
           You are free to suggest your own topic and we will provide you with a
-          room where you can wait for your opponents. Please be polite and have
-          a nice chat!
+          free room where you can wait for your opponents. Please be polite and
+          have a nice chat!
         </p>
       </div>
       <RoomCreation onSubmit={createRoom}>
