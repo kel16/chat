@@ -1,24 +1,24 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { SERVER_URL } from "~/constants";
-import { Room } from "./models";
+import { ClientRoom } from "~/types";
 
 const roomsPath = `${SERVER_URL}/rooms`;
 
 const instance = axios.create();
 
-export async function getRooms(): Promise<Room[]> {
+export async function getRooms(): Promise<ClientRoom[]> {
   return await instance
     .get(roomsPath)
-    .then((response: AxiosResponse<Room[]>) => response.data)
+    .then((response: AxiosResponse<ClientRoom[]>) => response.data)
     .catch((error: AxiosError) => {
       console.error(`Error getting list of rooms: ${error.message}`);
       throw error;
     });
 }
 
-export async function addRoom(room: Room): Promise<void> {
+export async function addRoom(request: ClientRoom): Promise<void> {
   return await instance
-    .post(roomsPath, room)
+    .post(roomsPath, request)
     .then((response: AxiosResponse<void>) => response.data)
     .catch((error: AxiosError) => {
       console.error(`Error adding a new room: ${error.message}`);

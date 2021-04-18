@@ -1,8 +1,7 @@
-import { Room } from "api/models";
 import React, { useEffect, useState } from "react";
 import * as uuid from "uuid";
 import { Step } from "~/constants";
-import { Client } from "~/types";
+import { Client, Room } from "~/types";
 import ChatRoom from "./ChatRoom";
 import Corridor from "./Corridor";
 import { Container, Page } from "./styles";

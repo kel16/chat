@@ -1,19 +1,19 @@
 import { Injectable } from "@nestjs/common";
-import { Room } from "./entities/room.entity";
+import { ClientRoom } from "./entities/clientRoom.entity";
 
 @Injectable()
 export class RoomsService {
-  private readonly rooms: Room[] = [];
+  private readonly clientRooms: ClientRoom[] = [];
 
-  create(room: Room) {
-    this.rooms.push(room);
+  create(room: ClientRoom) {
+    this.clientRooms.push(room);
   }
 
-  findAll(): Room[] {
-    return this.rooms;
+  findAll(): ClientRoom[] {
+    return this.clientRooms;
   }
 
   findOne(uid: string) {
-    return this.rooms.find((room) => room.uid === uid);
+    return this.clientRooms.find((clientRoom) => clientRoom.room.uid === uid);
   }
 }

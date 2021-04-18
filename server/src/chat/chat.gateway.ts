@@ -22,12 +22,6 @@ export class ChatGateway
     this.server.to(payload.room.uid).emit("messageToClient", payload);
   }
 
-  @SubscribeMessage("createRoom")
-  handleRoomCreate(client: Socket, room: Room) {
-    client.join(room.uid);
-    client.emit("joinedRoom", room);
-  }
-
   @SubscribeMessage("joinRoom")
   handleRoomJoin(client: Socket, room: Room) {
     client.join(room.uid);

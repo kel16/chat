@@ -1,8 +1,7 @@
-import { Room } from "api/models";
 import { addRoom, getRooms } from "api/rooms";
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as uuid from "uuid";
-import { Client } from "~/types";
+import { Client, ClientRoom, Room } from "~/types";
 import { Button, CorridorPage, Input, RoomCard, RoomCreation } from "./styles";
 
 type CorridorProps = {
@@ -11,13 +10,13 @@ type CorridorProps = {
 };
 
 const Corridor = ({ user, onJoinRoom }: CorridorProps) => {
-  const [rooms, setRooms] = useState<Room[]>([]);
+  const [clientRooms, setClientRooms] = useState<ClientRoom[]>([]);
   const [topic, setTopic] = useState("");
 
   useEffect(() => {
     const fetchRooms = async () => {
       const data = await getRooms();
-      setRooms(data);
+      setClientRooms(data);
     };
 
     fetchRooms();
@@ -34,7 +33,7 @@ const Corridor = ({ user, onJoinRoom }: CorridorProps) => {
       topic,
     };
 
-    await addRoom(newRoom);
+    await addRoom({ client: user, room: newRoom });
     setTopic("");
     onJoinRoom(newRoom);
   };
@@ -58,9 +57,11 @@ const Corridor = ({ user, onJoinRoom }: CorridorProps) => {
         ></Input>
         <Button type="submit">Give me a new room!</Button>
       </RoomCreation>
-      {rooms.map((room) => (
+      {clientRooms.map(({ client, room }) => (
         <RoomCard key={room.uid}>
-          <div className="title">{room.topic}</div>
+          <div className="title">
+            {client.name}: {room.topic}
+          </div>
           <Button onClick={() => onJoinRoom(room)}>Join room</Button>
         </RoomCard>
       ))}

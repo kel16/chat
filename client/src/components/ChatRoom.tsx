@@ -1,4 +1,3 @@
-import { Room } from "api/models";
 import React, {
   ChangeEvent,
   FormEvent,
@@ -9,7 +8,7 @@ import React, {
 import io from "socket.io-client";
 import * as uuid from "uuid";
 import { SERVER_URL } from "~/constants";
-import { ChatMessage, Client } from "~/types";
+import { ChatMessage, Client, Room } from "~/types";
 import MessageItem from "./MessageItem";
 import {
   Button,

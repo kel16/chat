@@ -1,5 +1,5 @@
+import { Client } from "../../rooms/entities/client.entity";
 import { Room } from "../../rooms/entities/room.entity";
-import { Client } from "./client.entity";
 import { Message } from "./message.entity";
 
 export class ChatMessage {
