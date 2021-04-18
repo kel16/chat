@@ -7,7 +7,8 @@ import React, {
 } from "react";
 import io from "socket.io-client";
 import * as uuid from "uuid";
-import { ChatMessagePayload, ClientPayload } from "~/types";
+import { SERVER_URL } from "~/constants";
+import { ChatMessage, Client, Room } from "~/types";
 import MessageItem from "./MessageItem";
 import {
   Button,
@@ -18,26 +19,21 @@ import {
   Input,
 } from "./styles";
 
-const SOCKET_URL = "http://localhost:8000";
-
 type ChatRoomProps = {
-  topic: string;
-  client: ClientPayload;
+  room: Room;
+  user: Client;
 };
 
-const ChatRoom = () => {
-  const [user, setUser] = useState<ClientPayload>({
-    uid: uuid.v4(),
-    name: uuid.v4(),
-  });
-
+const ChatRoom = ({ room, user }: ChatRoomProps) => {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<ChatMessagePayload[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
-  const socketRef = useRef(io(SOCKET_URL));
+  const socketRef = useRef(io(SERVER_URL));
 
   useEffect(() => {
-    socketRef.current.on("messageToClient", (message: ChatMessagePayload) => {
+    socketRef.current.emit("joinRoom", room);
+
+    socketRef.current.on("messageToClient", (message: ChatMessage) => {
       setMessages((messages) => [...messages, message]);
     });
 
@@ -52,10 +48,11 @@ const ChatRoom = () => {
   const onSendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!message) return;
+    if (!message.trim()) return;
 
-    const messageData: ChatMessagePayload = {
+    const messageData: ChatMessage = {
       client: user,
+      room,
       message: {
         uid: uuid.v4(),
         text: message,
@@ -69,7 +66,7 @@ const ChatRoom = () => {
 
   return (
     <Chat>
-      <ChatHeader>Let's discuss the topic: {"immortality"}</ChatHeader>
+      <ChatHeader>Let's discuss the topic: {room.topic}</ChatHeader>
       <ChatContent>
         {messages.map(
           ({

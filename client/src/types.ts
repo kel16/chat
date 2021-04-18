@@ -1,19 +1,27 @@
-export type Identifier = {
+type Identifier = {
   uid: string;
 };
 
-export type ClientPayload = Identifier & {
+export type Client = Identifier & {
   name: string;
 };
 
-export type MessageProps = {
+export type Room = Identifier & {
+  topic: string;
+};
+
+export type ClientRoom = {
+  room: Room;
+  client: Client;
+};
+
+export type Message = Identifier & {
   text: string;
   date: Date;
 };
 
-export type MessagePayload = Identifier & MessageProps;
-
-export type ChatMessagePayload = {
-  client: ClientPayload;
-  message: MessagePayload;
+export type ChatMessage = {
+  client: Client;
+  room: Room;
+  message: Message;
 };
