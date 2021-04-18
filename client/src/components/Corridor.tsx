@@ -2,13 +2,15 @@ import { Room } from "api/models";
 import { addRoom, getRooms } from "api/rooms";
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as uuid from "uuid";
+import { Client } from "~/types";
 import { Button, CorridorPage, Input, RoomCard, RoomCreation } from "./styles";
 
 type CorridorProps = {
+  user: Client;
   onJoinRoom: (room: Room) => void;
 };
 
-const Corridor = ({ onJoinRoom }: CorridorProps) => {
+const Corridor = ({ user, onJoinRoom }: CorridorProps) => {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [topic, setTopic] = useState("");
 
@@ -40,7 +42,7 @@ const Corridor = ({ onJoinRoom }: CorridorProps) => {
   return (
     <CorridorPage>
       <div className="instructions">
-        <h1>Welcome to the party!</h1>
+        <h1>Welcome to the party, {user.name}!</h1>
         <p>We are happy to offer you some rooms with topics to debate over.</p>
         <p>
           You are free to suggest your own topic and we will provide you with a

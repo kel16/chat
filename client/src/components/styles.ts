@@ -44,6 +44,7 @@ export const ChatControls = styled.form`
 `;
 
 export const Input = styled.input`
+  box-sizing: border-box;
   height: 40px;
   width: 600px;
 `;
@@ -85,6 +86,10 @@ export const CorridorPage = styled.div`
 
 export const RoomCreation = styled.form`
   margin: 15px 0;
+
+  ${Button} {
+    margin-left: 10px;
+  }
 `;
 
 export const RoomCard = styled.div`

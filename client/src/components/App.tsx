@@ -1,20 +1,27 @@
 import { Room } from "api/models";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as uuid from "uuid";
 import { Step } from "~/constants";
-import { ClientPayload } from "~/types";
+import { Client } from "~/types";
 import ChatRoom from "./ChatRoom";
 import Corridor from "./Corridor";
 import { Container, Page } from "./styles";
 
-const user: ClientPayload = {
-  uid: uuid.v4(),
-  name: uuid.v4(),
-};
-
 const App: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(Step.Corridor);
   const [currentRoom, setCurrentRoom] = useState<Room>({ uid: "", topic: "" });
+  const [user, setUser] = useState<Client>({
+    uid: uuid.v4(),
+    name: "stranger",
+  });
+
+  useEffect(() => {
+    const username = prompt(
+      "Hello, stranger! Would you kindly introduce yourself to us?"
+    );
+
+    username && setUser({ ...user, name: username });
+  }, []);
 
   const onJoinRoom = (room: Room) => {
     setCurrentRoom(room);
@@ -22,7 +29,7 @@ const App: React.FC = () => {
   };
 
   const currentPage = {
-    [Step.Corridor]: <Corridor onJoinRoom={onJoinRoom} />,
+    [Step.Corridor]: <Corridor user={user} onJoinRoom={onJoinRoom} />,
     [Step.Room]: <ChatRoom room={currentRoom} user={user} />,
   };
 
