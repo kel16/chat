@@ -28,8 +28,6 @@ yarn start
 
 Open terminal in the <b>client</b> folder. Install dependencies:
 
-Run the client:
-
 ```
 yarn
 ```
