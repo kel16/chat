@@ -1,3 +1,5 @@
+import { Room } from "api/models";
+
 export type Identifier = {
   uid: string;
 };
@@ -15,5 +17,6 @@ export type MessagePayload = Identifier & MessageProps;
 
 export type ChatMessagePayload = {
   client: ClientPayload;
+  room: Room;
   message: MessagePayload;
 };

@@ -77,3 +77,24 @@ export const Message = styled.div<MessageProps>`
       props.variant === "primary" ? " flex-end" : "flex-start"};
   }
 `;
+
+export const CorridorPage = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const RoomCreation = styled.form`
+  margin: 15px 0;
+`;
+
+export const RoomCard = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  background-color: rgb(126, 126, 126);
+  border-radius: 5px;
+
+  &:not(:first-child) {
+    margin-top: 5px;
+  }
+`;
